@@ -1,0 +1,17 @@
+html {
+    background-color: #09c;
+}
+
+body {
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    color: #000;
+    font-family: 'Raleway', sans-serif;  
+}
+
+.main_header {
+    font-size: 50px;
+}

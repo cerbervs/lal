@@ -1,0 +1,10 @@
+/* some style */
+@import url('https://fonts.googleapis.com/css?family=Candal|Raleway&display=swap');
+
+html {
+    background-color: #0099cc;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+}

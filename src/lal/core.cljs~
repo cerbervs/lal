@@ -1,0 +1,79 @@
+(ns lal.core
+     (:require [reagent.core :as r :refer [atom]]))
+
+(enable-console-print!)
+
+(defonce booking (atom {:status false}))
+  
+(defn booking-swap []
+  (let [status (@booking :status)]
+    (swap! booking #(not status))))
+
+(defn toggle-class
+  [a k c1 c2]
+  (if (= (@a k) c1)
+    (swap! a assoc k c2)
+    (swap! a assoc k c1)))
+
+(defn header
+  []
+  (fn []
+    [:div {:class "container" :margin "auto" :width "100%"}
+     [:h1 {:class ""} "Love and Labradorite"]]))
+
+
+(defn booking-form
+  [class]    
+  (fn
+    []
+    [:div {:class (@class :booking-form)}
+     [:div {:class "modal-background"}]
+     [:div {:class "modal-content"}
+      [:p "Full Name (First, Last): "
+       [:input {:class "textbox" :name "fname"}]]
+      [:br]
+      [:div
+       [:p "Preferred Contact Method"]
+       [:p "Contact me by phone: "
+        [:input {:type "radio" :name "phone-radio"}]]
+       [:p "Contact me by email: "
+        [:input {:type "radio" :name "email-radio"}]]]
+      [:br]
+      [:input {:class "textbox"}]]
+     [:button {:class"modal-close is-large"
+               :on-click #(do
+                            (toggle-class class :booking-form "modal" "modal is-active")
+                            (toggle-class class :btn-success "button" "button has-background-success"))}]]))
+
+
+(defn booking-btn
+  [class]
+    (fn []
+            [:input {:class (@class :btn-success)
+               :value  "Book Appointment"
+                     :on-click #(do
+                            (toggle-class class :booking-form "modal" "modal is-active")
+                            (toggle-class class :btn-success "button" "button has-background-success"))}]))
+
+(defn app
+  []
+  (let [local-state (if (= (@booking :status) false)
+                      (atom {:booking-form "modal"
+                             :btn-success "button"})
+                      (atom {:booking-form "modal is-active"
+                             :btn-success "button has-background-success"}))]
+    (fn []
+      [:div
+       {:class "conatiner" :margin "" :width "100%"}
+       [header]
+       [booking-form local-state]
+       [booking-btn local-state]])))
+
+
+
+(r/render-component [app]
+                    (.getElementById js/document "app"))
+
+(defn on-js-reload []
+  ;; nothing yet
+  )
