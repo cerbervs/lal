@@ -73,11 +73,11 @@ Volutpat diam ut venenatis tellus in metus vulputate. Facilisi etiam dignissim d
      [:h2 {:class "tagline"} (get site-content :tagline)]
      [:h2 {:class "description"} (get site-content :description)]]
     [:div {:class "what_we_offer"}
-     (for [item (get site-content :what-we-offer)]
+     (let [item (get site-content :what-we-offer)]
        [:ul (for [sub item]
-              [:ul (for [desc sub]
-                     [:li (get desc :header)]
-                     [:li (get desc :desc)])])])]))
+                [:ul (for [desc sub]
+                    [:li (get desc :header)]
+                    [:li (get desc :desc)])])])]))
 
 (defn app
   []
